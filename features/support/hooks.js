@@ -1,96 +1,49 @@
-/* eslint-disable babel/new-cap */
-
-import { After, Before } from '../../'
-import fs from 'fs'
-import fsExtra from 'fs-extra'
-import path from 'path'
-import tmp from 'tmp'
-
-const projectPath = path.join(__dirname, '..', '..')
-const projectNodeModulesPath = path.join(projectPath, 'node_modules')
-const moduleNames = fs.readdirSync(projectNodeModulesPath)
-
-Before('@debug', function() {
-  this.debug = true
-})
-
-Before('@spawn', function() {
-  this.spawn = true
-})
-
-Before(function() {
-  const tmpObject = tmp.dirSync({ unsafeCleanup: true })
-  this.tmpDir = fs.realpathSync(tmpObject.name)
-
-  const tmpDirProfilePath = path.join(this.tmpDir, 'cucumber.js')
-  const profileContent =
-    'module.exports = {default: "--require-module babel-register"}'
-  fs.writeFileSync(tmpDirProfilePath, profileContent)
-
-  const tmpDirBabelRcPath = path.join(this.tmpDir, '.babelrc')
-  const profileBabelRcPath = path.join(projectPath, '.babelrc')
-  fsExtra.createSymlinkSync(profileBabelRcPath, tmpDirBabelRcPath)
-
-  const tmpDirNodeModulesPath = path.join(this.tmpDir, 'node_modules')
-  moduleNames.forEach(moduleName => {
-    const tmpDirNodeModulePath = path.join(tmpDirNodeModulesPath, moduleName)
-    const projectNodeModulePath = path.join(
-      projectPath,
-      'node_modules',
-      moduleName
-    )
-    fsExtra.createSymlinkSync(projectNodeModulePath, tmpDirNodeModulePath)
+'use strict'
+const {defineSupportCode} = require('cucumber')
+const builder = require('./custombuilder')
+const {isdevice, ismobile} = require('./ismobile')
+const report = require('cucumber2-report')
+const $u = require('./$u')
+defineSupportCode(function ({After, Before, registerHandler}) {
+  Before({tags: 'not (@link or @linkvideo)'}, async function () {
+    global.driver = await builder.build()
+    if (process.platform === 'linux' && !process.env.DEVICE_NAME) {
+      await driver.manage().window().setSize(1440, 1050)
+    }
+    if (isdevice) {
+      global.driver = await require('webdriver-js-extender')
+        .extend(global.driver)
+    }
   })
 
-  const tmpDirCucumberPath = path.join(tmpDirNodeModulesPath, 'cucumber')
-  fsExtra.createSymlinkSync(projectPath, tmpDirCucumberPath)
-  this.localExecutablePath = path.join(tmpDirCucumberPath, 'bin', 'cucumber-js')
-})
-
-Before('@global-install', function() {
-  const tmpObject = tmp.dirSync({ unsafeCleanup: true })
-
-  const globalInstallNodeModulesPath = path.join(tmpObject.name, 'node_modules')
-  moduleNames.forEach(moduleName => {
-    const globalInstallNodeModulePath = path.join(
-      globalInstallNodeModulesPath,
-      moduleName
-    )
-    const projectNodeModulePath = path.join(
-      projectPath,
-      'node_modules',
-      moduleName
-    )
-    fsExtra.createSymlinkSync(
-      projectNodeModulePath,
-      globalInstallNodeModulePath
-    )
+  After({tags: 'not (@link or @linkvideo)'}, async function (scenarioResult) {
+    await driver.close()
+    await driver.quit()
   })
 
-  const globalInstallCucumberPath = path.join(
-    globalInstallNodeModulesPath,
-    'cucumber'
-  )
-  const itemsToCopy = ['bin', 'lib', 'package.json']
-  itemsToCopy.forEach(item => {
-    fsExtra.copySync(
-      path.join(projectPath, item),
-      path.join(globalInstallCucumberPath, item)
-    )
+  After({tags: 'not (@link or @linkvideo or @visual)'}, async function (scenarioResult) {
+    if (scenarioResult.isFailed()) {
+      await $u.saveScreenshot(this, scenarioResult.scenario.name)
+    }
   })
 
-  this.globalExecutablePath = path.join(
-    globalInstallCucumberPath,
-    'bin',
-    'cucumber-js'
-  )
-})
-
-After(function() {
-  if (this.lastRun.error && !this.verifiedLastRunError) {
-    throw new Error(
-      `Last run errored unexpectedly. Output:\n\n${this.lastRun.output}\n\n` +
-        `Error Output:\n\n${this.lastRun.errorOutput}`
-    )
-  }
+  registerHandler('AfterFeatures', async function () {
+    const browser = process.env.SELENIUM_BROWSER || 'chrome'
+    const type = ismobile ? 'Mobile' : 'Desktop'
+    const env = process.env.ENV_URL || 'https://staging.hbo.com'
+    const device = process.env.EMU_DEVICE || process.env.DEVICE_NAME
+    const tag = process.argv.slice(-1)[0]
+    await report.generate({
+      source: './reports/result.json',             // source json
+      dest: './reports',                   // target directory (will create if not exists)
+      partials: './templates/partials',
+      config: {
+        env: env,
+        browser: browser,
+        type: type,
+        device: device,
+        tag: tag
+      }
+    })
+  })
 })
