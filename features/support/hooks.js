@@ -1,49 +1,35 @@
-'use strict'
-const {defineSupportCode} = require('cucumber')
-const builder = require('./custombuilder')
-const {isdevice, ismobile} = require('./ismobile')
-const report = require('cucumber2-report')
-const $u = require('./$u')
-defineSupportCode(function ({After, Before, registerHandler}) {
-  Before({tags: 'not (@link or @linkvideo)'}, async function () {
-    global.driver = await builder.build()
-    if (process.platform === 'linux' && !process.env.DEVICE_NAME) {
-      await driver.manage().window().setSize(1440, 1050)
-    }
-    if (isdevice) {
-      global.driver = await require('webdriver-js-extender')
-        .extend(global.driver)
-    }
-  })
+var {After, Before, Status} = require('cucumber');
 
-  After({tags: 'not (@link or @linkvideo)'}, async function (scenarioResult) {
-    await driver.close()
-    await driver.quit()
-  })
+// Synchronous
+Before(function () {
+  this.count = 0;
+});
 
-  After({tags: 'not (@link or @linkvideo or @visual)'}, async function (scenarioResult) {
-    if (scenarioResult.isFailed()) {
-      await $u.saveScreenshot(this, scenarioResult.scenario.name)
+// Asynchronous Callback
+Before(function (testCase, callback) {
+  var world = this;
+  tmp.dir({unsafeCleanup: true}, function(error, dir) {
+    if (error) {
+      callback(error);
+    } else {
+      world.tmpDir = dir;
+      callback();
     }
-  })
+  });
+});
 
-  registerHandler('AfterFeatures', async function () {
-    const browser = process.env.SELENIUM_BROWSER || 'chrome'
-    const type = ismobile ? 'Mobile' : 'Desktop'
-    const env = process.env.ENV_URL || 'https://staging.hbo.com'
-    const device = process.env.EMU_DEVICE || process.env.DEVICE_NAME
-    const tag = process.argv.slice(-1)[0]
-    await report.generate({
-      source: './reports/result.json',             // source json
-      dest: './reports',                   // target directory (will create if not exists)
-      partials: './templates/partials',
-      config: {
-        env: env,
-        browser: browser,
-        type: type,
-        device: device,
-        tag: tag
-      }
-    })
-  })
-})
+// Asynchronous Promise
+After(function () {
+  // Assuming this.driver is a selenium webdriver
+  return this.driver.quit();
+});
+
+//saving a screenshot using Selenium WebDriver when a scenario fails:
+After(function (testCase) {
+  var world = this;
+  if (testCase.result.status === Status.FAILED) {
+    return webDriver.takeScreenshot().then(function(screenShot) {
+      // screenShot is a base-64 encoded PNG
+      world.attach(screenShot, 'image/png');
+    });
+  }
