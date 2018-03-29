@@ -1,16 +1,11 @@
-var {setWorldConstructor} = require('cucumber');
-var seleniumWebdriver = require('selenium-webdriver');
+'use strict'
+const {setWorldConstructor, setDefaultTimeout} = require('cucumber')
 
-function CustomWorld() {
-  this.driver = new seleniumWebdriver.Builder()
-    .forBrowser('firefox')
-    .build();
-
-  // Returns a promise that resolves to the element
-  this.waitForElement = function(locator) {
-    var condition = seleniumWebdriver.until.elementLocated(locator);
-    return this.driver.wait(condition)
-  }
+function CustomWorld ({attach, parameters}) {
+  this.attach = attach
+  this.parameters = parameters
+  this.page = null
 }
 
 setWorldConstructor(CustomWorld)
+setDefaultTimeout(600 * 1000)

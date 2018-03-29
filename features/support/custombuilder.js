@@ -4,7 +4,6 @@ const WebElement = webdriver.WebElement
 const {$, $$, $x, $$x, $v, $$v, parent, prev, next, $f} = require('./$')
 const chrome = require('selenium-webdriver/chrome')
 const {isIos} = require('./ismobile')
-const {click, flickElement} = require('./actions')
 require('chromedriver')
 require('geckodriver')
 
@@ -53,18 +52,13 @@ caps['nativeWebTap'] = true
 caps['browserstack.debug'] = true
 caps['browserstack.user'] = process.env.BS_USER
 caps['browserstack.key'] = process.env.BS_KEY
-// caps['browserstack.local'] = 'true'
 caps['device'] = process.env.DEVICE_NAME
 caps['browserstack.appium_version'] = '1.7.2'
 caps['browserstack.selenium_version'] = '3.6.0'
-// caps['safariAllowPopups'] = true
 caps['realMobile'] = 'true'
-caps['project'] = 'Dotcom'
+caps['project'] = 'Cucumium'
 caps['build'] = new Date().toJSON().substr(0, 16).replace(/[-:]/g, '') +
   (process.env.USERNAME ? process.env.USERNAME.slice(0, -3) : 'jenkins')
-// caps['os_version'] = '11.2'
-// caps['platformName'] = 'iOS'
-// caps['platformVersion'] = '11.2'
 caps['automationName'] = 'XCUITest'
 
 const builder = new webdriver.Builder()
