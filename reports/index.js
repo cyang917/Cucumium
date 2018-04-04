@@ -14,8 +14,7 @@ var options = {
         metadata: {
             "Test Environment": env,
             "Browser": browser,
-            "Platform": type,
-            "Tag": tag
+            "Platform": type
         }
     };
  

@@ -2,7 +2,6 @@
 
 class Page {
   constructor (path) {
-    this.title = 'My Page'
     this.path = path || '/'
     this.baseURL = process.env.ENV_URL || 'https://www.pwc.com'
   }

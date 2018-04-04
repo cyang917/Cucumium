@@ -1,7 +1,6 @@
 var {After, Before, AfterAll, Status} = require('cucumber')
 const builder = require('./custombuilder')
 const {isdevice} = require('./ismobile')
-var reporter = require('cucumber-html-reporter')
 
 Before(async function () {
   global.driver = await builder.build()
@@ -14,7 +13,7 @@ Before(async function () {
   }
 })
 
-// Asynchronous Promise
+//Asynchronous Promise
 After(function () {
   // Assuming this.driver is a selenium webdriver
   return driver.quit();
