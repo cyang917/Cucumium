@@ -1,6 +1,7 @@
-var {After, Before, Status} = require('cucumber')
+var {After, Before, AfterAll, Status} = require('cucumber')
 const builder = require('./custombuilder')
 const {isdevice} = require('./ismobile')
+var reporter = require('cucumber-html-reporter')
 
 Before(async function () {
   global.driver = await builder.build()
