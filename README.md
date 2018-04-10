@@ -6,7 +6,7 @@
 ### Local Installation
 #### Requirement
 - git
-- node.js >= 7.6
+- node.js >= 8.9
 - chrome
 
 ```bash
