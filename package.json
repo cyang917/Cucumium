@@ -16,7 +16,7 @@
     "webdriver-js-extender": "github:jayrepo/webdriver-js-extender#208ca66"
   },
   "scripts": {
-    "report":"node ./reports/index.js",
+    "report": "node ./reports/index.js",
     "tag": "./node_modules/.bin/cucumber-js --format json:./reports/cucumber_report.json --tags"
   }
 }

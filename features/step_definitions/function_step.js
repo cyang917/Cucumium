@@ -24,3 +24,18 @@ Then('I click {string} element', async function (elementName) {
   await element.click()
   await driver.sleep(2000)
 })
+
+When('I input {string} into {string} element', async function (inputText, elementName) {
+  const element = this.page[elementName]
+  await element.sendKeys(inputText)
+  await driver.sleep(2000)
+})
+
+Then('I should go to {string} page', async function (pageName) {
+  this.page = pages[pageName]
+  await driver.sleep(3000)
+})
+
+Then('I wait for {int} seconds', async function (int) {
+  await driver.sleep(int * 1000)
+})
