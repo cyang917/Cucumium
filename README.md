@@ -1,6 +1,6 @@
 # Cucumium
 
-## Nodejs Test Automation  Framework(Nodejs +  Cucumber + Selenium + Appium + BrowserStack)
+## Nodejs Test Automation  Framework ( Nodejs +  Cucumber + Selenium + Appium + BrowserStack )
 
 
 ### Local Installation
@@ -27,7 +27,7 @@ export SELENIUM_BROWSER=chrome
 # E.g., Apple iPhone6, Apple iPad, Google Nexus 6, etc
 export EMU_DEVICE="Apple iPhone 6"
 # On Mac & Linux you can simply run
-SELENIUM_BROWSER=chrome EMU_DEVICE="Apple iPhone 6" npm run tag @login
+SELENIUM_BROWSER=chrome EMU_DEVICE="iPhone 6" npm run tag @login
 ```
 
 ## Real Devices (Android Emulator, iOS Simulator and physical devices)
