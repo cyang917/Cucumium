@@ -25,7 +25,7 @@ Report is located in reports folder
 export SELENIUM_BROWSER=chrome
 # A valid device name in Chrome's device mode.
 # E.g., Apple iPhone6, Apple iPad, Google Nexus 6, etc
-export EMU_DEVICE="Apple iPhone 6"
+export EMU_DEVICE="iPhone 6"
 # On Mac & Linux you can simply run
 SELENIUM_BROWSER=chrome EMU_DEVICE="iPhone 6" npm run tag @login
 ```
