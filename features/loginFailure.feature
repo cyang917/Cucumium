@@ -1,10 +1,9 @@
-@login
+@invalidLogin
 Feature: Login function
     As a role
     I want feature
 
-  Background: Navigate to login page
-# Scenario Outline: Login as a guest
+  Scenario Outline: Login with Invalid Credentials
    Given I am a guest user
    When I open 'Home' page
    Then I should see 'myAccount' element
@@ -12,7 +11,6 @@ Feature: Login function
    When I click 'signIn' element
    Then I should go to 'Login' page
 
-  Scenario Outline: Login with Invalid Credentials
    When I input <email> into 'tbEmail' element
    When I input <password> into 'tbPassword' element
    When I click 'btnLogIn' element
