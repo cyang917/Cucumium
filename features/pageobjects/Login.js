@@ -8,6 +8,9 @@ class Login extends Page {
   get tbPassword () { return $(`#password`)}
   get btnLogIn () { return $(`#login-submit`)}
   get txtInvalid() {return $(`#msg_loginUserIDPwdFaild`)}
+  get txtInvalidEmailFormat () {return $(`#msg_loginInalidEmailFormat`)}
+  get txtEmailRequired () {return $(`#msg_loginRequiredField`)}
+  get txtPwdRequired () {return $(`#msg_passwordReq`)}
 }
 
 module.exports = Login
