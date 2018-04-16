@@ -1,6 +1,6 @@
 'use strict'
 const {WebElement, WebElementPromise} = require('selenium-webdriver')
-const {isMobile} = require('./ismobile')
+const {ismobile} = require('./ismobile')
 
 /**
  * $
@@ -61,7 +61,7 @@ const $$x = function (selector) {
 /**
  * $x
  * Find visile element by css selector
- * If isMobile design and mobileSelector is not empty,
+ * If ismobile design and mobileSelector is not empty,
  * return the first visible element located by mobileSelector
  *
  * @param {string} selector css selector
@@ -70,7 +70,7 @@ const $$x = function (selector) {
  */
 const $v = function (selector, mobileSelector = '') {
   const that = (this instanceof WebElement) ? this : driver
-  if (!!mobileSelector && isMobile) {
+  if (!!mobileSelector && ismobile) {
     return that.findElement(firstVisibleElement(that, mobileSelector))
   }
   return that.findElement(firstVisibleElement(that, selector))
@@ -79,7 +79,7 @@ const $v = function (selector, mobileSelector = '') {
 /**
  * $$
  * Find visible elements by css selector
- * If isMobile design and mobileSelector is not empty,
+ * If ismobile design and mobileSelector is not empty,
  * return the visible elements located by mobileSelector
  *
  * @param {string} selector css selector
@@ -88,7 +88,7 @@ const $v = function (selector, mobileSelector = '') {
  */
 const $$v = function (selector, mobileSelector = '') {
   const that = (this instanceof WebElement) ? this : driver
-  if (!!mobileSelector && isMobile) {
+  if (!!mobileSelector && ismobile) {
     return that.findElements(visibleElements(that, mobileSelector))
   }
   return that.findElements(visibleElements(that, selector))

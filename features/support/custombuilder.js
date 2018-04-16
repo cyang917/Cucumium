@@ -1,9 +1,8 @@
 'use strict'
 const webdriver = require('selenium-webdriver')
 const WebElement = webdriver.WebElement
-const {$, $$, $x, $$x, $v, $$v, parent, prev, next, $f} = require('./$')
+const {$, $$, $x, $$x, $v, $$v, $f} = require('./$')
 const chrome = require('selenium-webdriver/chrome')
-const {isIos} = require('./ismobile')
 require('chromedriver')
 require('geckodriver')
 
@@ -13,20 +12,7 @@ WebElement.prototype.$x = global.$x = $x
 WebElement.prototype.$$x = global.$$x = $$x
 WebElement.prototype.$v = global.$v = $v
 WebElement.prototype.$$v = global.$$v = $$v
-WebElement.prototype.parent = parent
-WebElement.prototype.prev = prev
-WebElement.prototype.next = next
 WebElement.prototype.$f = $f
-if (isIos) {
-  const deviceOffset = process.env.DEVICE_NAME === 'iPhone X' ? 94 : 70
-  WebElement.prototype.click = click(deviceOffset)
-  WebElement.prototype.flickElement = flickElement(deviceOffset)
-} else {
-  WebElement.prototype.flickElement = async function (offset, speed) {
-    return driver.touchActions().flickElement(this, offset, speed).perform()
-  }
-}
-
 const args = ['disable-infobars', 'start-maximized', 'no-sandbox']
 if (process.platform === 'darwin') {
   args.push('kiosk')

@@ -12,8 +12,7 @@
     "cucumber-html-reporter": "^3.0.3",
     "chromedriver": "^2.35.0",
     "geckodriver": "^1.10.0",
-    "selenium-webdriver": "^3.6.0",
-    "webdriver-js-extender": "github:jayrepo/webdriver-js-extender#208ca66"
+    "selenium-webdriver": "^3.6.0"
   },
   "scripts": {
     "report": "node ./reports/index.js",

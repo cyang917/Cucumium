@@ -7,10 +7,6 @@ Before(async function () {
   if (process.platform === 'linux' && !process.env.DEVICE_NAME) {
     await driver.manage().window().setSize(1440, 1050)
   }
-  if (isdevice) {
-    global.driver = await require('webdriver-js-extender')
-      .extend(global.driver)
-  }
 })
 
 //Asynchronous Promise
