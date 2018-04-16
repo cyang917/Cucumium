@@ -38,4 +38,14 @@ Then('I should go to {string} page', async function (pageName) {
 
 Then('I wait for {int} seconds', async function (int) {
   await driver.sleep(int * 1000)
+
+When('I input {string} element with value {string}' , async function (elementName, value) {
+  const element = this.page[elementName]
+  await element.sendKeys(value) 
+  await driver.sleep(2000)
+})
+Then('I should see {string} message in {string} element', async function (message, elementName) {
+  var element = this.page[elementName]
+  // element.getText()
+  expect(element.getText()).to.equal(message);
 })
