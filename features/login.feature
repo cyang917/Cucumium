@@ -1,7 +1,7 @@
 @login
 Feature: Login function
-  As a role
-  I want feature
+As a role
+I want feature
 
   Scenario: Login as a guest
     Given I am a guest user
