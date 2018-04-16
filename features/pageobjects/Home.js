@@ -8,13 +8,13 @@ class Home extends Page {
  get register () { return $(`.btn btn--primary`)}
  get registerButton() { return $(`.myaccount__login a.btn--primary`)}
  get registerEmail() { return $(`#email_address`)}
- get FirstName() { return $(`#first_name`)}
- get LastName() { return $(`#last_name`)}
- get NewPassword() { return $(`#reg_password`)}
- get Country() { return $(`#country`)}
- get Iagree() { return $(`#agreement_chk_indicator`)}
- get registersubmit() { return $(`#register-submit`)}
- get Thankyou() { return $(`.pwc-regis__content-heading`)}
+ get firstName() { return $(`#first_name`)}
+ get lastName() { return $(`#last_name`)}
+ get newPassword() { return $(`#reg_password`)}
+ get country() { return $(`#country`)}
+ get iAgree() { return $(`#agreement_chk_indicator`)}
+ get registerSubmit() { return $(`#register-submit`)}
+ get thankYou() { return $(`.pwc-regis__content-heading`)}
 }
 
 module.exports = Home

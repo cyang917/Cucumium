@@ -13,7 +13,10 @@
 git clone https://github.com/cyang917/Cucumium/ 
 cd <your_repo>
 npm install
+# run spefic feature(s)
 npm run tag @login && npm run report
+# run all features
+npm run test && npm run report
 ```
 
 ## Reporting

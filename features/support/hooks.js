@@ -4,7 +4,7 @@ const {isdevice} = require('./ismobile')
 
 Before(async function () {
   global.driver = await builder.build()
-  if (process.platform === 'linux') {
+  if (process.platform === 'linux' && !process.env.DEVICE_NAME) {
     await driver.manage().window().setSize(1440, 1050)
   }
   if (isdevice) {
