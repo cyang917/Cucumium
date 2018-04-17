@@ -23,4 +23,3 @@ I want feature
             | 'test@pwc.com' | ''         | 'txtPwdRequired'   |
 #    | 'test@pwc.com'  | 'test1234'  | 'txtInvalid'            |
 #    | 'test.com'      | 'test1234'  | 'txtInvalidEmailFormat' |
-
