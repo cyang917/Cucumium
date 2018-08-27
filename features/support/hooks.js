@@ -2,8 +2,8 @@ var {After, Before, AfterAll, Status} = require('cucumber')
 const builder = require('./custombuilder')
 const {isdevice} = require('./ismobile')
 
-Before(async function () {
-  global.driver = await builder.build()
+Before(async function (scenario) {
+  global.driver = await builder(scenario.pickle.name).build()
   if (process.platform === 'linux' && !process.env.DEVICE_NAME) {
     await driver.manage().window().setSize(1440, 1050)
   }

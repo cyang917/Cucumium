@@ -47,9 +47,12 @@ caps['build'] = new Date().toJSON().substr(0, 16).replace(/[-:]/g, '') +
   (process.env.USERNAME ? process.env.USERNAME.slice(0, -3) : 'jenkins')
 caps['automationName'] = 'XCUITest'
 
-const builder = new webdriver.Builder()
+const builder = function (testName){
+  caps['name']= testName
+  return new webdriver.Builder()
   .forBrowser('chrome')
   .setChromeOptions(chromeOptions)
   .withCapabilities(caps)
+}
 
 module.exports = builder

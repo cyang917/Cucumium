@@ -15,6 +15,6 @@ I want feature
     When I input 'lastName' element with value 'lastname'
     When I input 'newPassword' element with value 'newpassword'
     When I input 'country' element with value 'China'
-    Then I click 'iAgree' element
-    Then I click 'registerSubmit' element
+    When I click 'iAgree' element
+    When I click 'registerSubmit' element
     Then I should see 'Thank you for registering with PwC.com.' message in 'thankYou' element

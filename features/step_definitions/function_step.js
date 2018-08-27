@@ -19,7 +19,7 @@ Then('I should see {string} element', async function (elementName) {
   expect(await element.isDisplayed()).to.be.true
 })
 
-Then('I click {string} element', async function (elementName) {
+When('I click {string} element', async function (elementName) {
   const element = this.page[elementName]
   await element.click()
   await driver.sleep(2000)
@@ -34,9 +34,10 @@ When('I input {string} into {string} element', async function (inputText, elemen
 Then('I should go to {string} page', async function (pageName) {
   this.page = pages[pageName]
   await driver.sleep(3000)
+ // expect((await driver.getCurrentUrl()).includes(pageName)).to.be.true
 })
 
-Then('I wait for {int} seconds', async function (int) {
+When('I wait for {int} second(s)', async function (int) {
   await driver.sleep(int * 1000)
 })
 
